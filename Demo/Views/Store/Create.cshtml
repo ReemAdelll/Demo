@@ -1,0 +1,20 @@
+﻿@model Store
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+    <form action="/Store/create" method="post">
+       
+        <label asp-for="Store_Name">Store Name</label> <input asp-for="Store_Name" />
+        <input type="submit" value="Add Store"/>
+    </form>
+</body>
+</html>
