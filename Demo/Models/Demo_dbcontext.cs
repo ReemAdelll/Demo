@@ -16,5 +16,6 @@ namespace Demo.Models
             optionsBuilder.UseSqlServer("Data Source= DESKTOP-ATD1VHG\\SQLEXPRESS; Initial Catalog=MVC_DB; Integrated Security= True; Trust Server Certificate=True");
             base.OnConfiguring(optionsBuilder);
         }
+        
     }
 }

@@ -7,5 +7,7 @@ namespace Demo.Models
         [Key]
         public int Id { get; set; }
         public String Store_Name { get; set; }
+        public ICollection<Item> Items { get; set; } = new HashSet<Item>();
+        public ICollection<StoreAndItem> StoreAndItem { get; set; } = new HashSet<StoreAndItem>();
     }
 }
