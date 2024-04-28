@@ -14,7 +14,7 @@ namespace Demo.Models
         public Demo_dbcontext(DbContextOptions options):base(options) { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source= DESKTOP-ATD1VHG\\SQLEXPRESS; Initial Catalog=MVC_DB; Integrated Security= True; Trust Server Certificate=True");
+            optionsBuilder.UseSqlServer("Data Source= .; Initial Catalog=MVC_DB; Integrated Security= True; Trust Server Certificate=True");
             base.OnConfiguring(optionsBuilder);
         }
         
