@@ -27,5 +27,27 @@ namespace Demo.Controllers
                 (a => a.Store_Id == StoreId && a.Item_Id == ItemId).Sum(a => a.Quantity);
             return Ok(Total_Quantity);
 		}
-    }
+        [HttpPost]
+		public IActionResult Index(StoreItemViewModel viewmodel)
+        {
+            StoreAndItem storeAndItem = new StoreAndItem
+            {
+                Store_Id = viewmodel.Store_Id,
+                Item_Id = viewmodel.Item_Id,
+                Quantity = viewmodel.Quantity
+            };
+            _context.StoresAndItems.Add(storeAndItem);
+            _context.SaveChanges();
+			var store = _context.Stores.ToList();
+			var item = _context.Items.ToList();
+
+			StoreItemViewModel model = new StoreItemViewModel 
+            { Stores = store,
+                Items = item,
+                Quantity= viewmodel.Quantity
+            };
+			return View(model);
+        }
+
+	}
 }

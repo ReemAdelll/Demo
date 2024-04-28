@@ -8,6 +8,6 @@ namespace Demo.ViewModel
         public List<Store> Stores { get; set; }
         public int Item_Id { get; set; }
         public List<Item> Items { get; set; }
-        public List<double> Quantities { get; set; }
+        public int Quantity { get; set; }
     }
 }

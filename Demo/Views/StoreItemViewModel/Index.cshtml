@@ -8,18 +8,25 @@
 
 
  <form method="post">
-
+	 <label class="fw-bold"> Store </label>
 	<select asp-for="Store_Id" asp-items="Store" class="form-control">
-		<option></option>
+		<option>-Select Store-</option>
 	</select>
+	<label class="fw-bold"> Item </label>
 	<select asp-for="Item_Id" asp-items="Item" class="form-control">
-		<option></option>
+		<option>-Select Item-</option>
 	</select>
 	<div id="Total_Quantity">
 	
 
 
 	</div>
+	@if(Model.Quantity != 0)
+	{
+		<div>Quantity Added Is = @Model.Quantity</div>
+	}
+	<input type="text" name="Quantity" class="text-secondary"/>
+	<input type="submit" value="Add Quantity" class="btn btn-primary"/>
 </form>
 @section Scripts{
 	<script>

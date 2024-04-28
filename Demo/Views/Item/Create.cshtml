@@ -1,20 +1,8 @@
 ﻿@model Item
-@{
-    Layout = null;
-}
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
-</head>
-<body>
     <form action="/Item/create" method="post">
 
         <label asp-for="Item_Name">Item Name</label> <input asp-for="Item_Name" />
         <input type="submit" value="Add Item" />
     </form>
-</body>
-</html>
+

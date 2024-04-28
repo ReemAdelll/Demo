@@ -1,21 +1,9 @@
 ﻿@model Item
-@{
-    Layout = null;
-}
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
-</head>
-<body>
     <form method="post">
 
         @* <label asp-for="Id"></label> *@<input type="hidden" asp-for="Id" /> <br />
         <label asp-for="Item_Name">Store Name</label><input asp-for="Item_Name" />
         <input type="submit" value="Update" />
     </form>
-</body>
-</html>
+
