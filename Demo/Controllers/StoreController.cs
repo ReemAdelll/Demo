@@ -1,4 +1,5 @@
 ﻿using Demo.Models;
+using Demo.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,16 +7,17 @@ namespace Demo.Controllers
 {
 	public class StoreController : Controller
 	{
-		private readonly Demo_dbcontext _context;
+        private readonly IStoreRepo _IStoreRepo;
 
-		public StoreController(Demo_dbcontext context)
+        public StoreController(IStoreRepo IRepo)
+        {
+
+            _IStoreRepo = IRepo;
+        }
+        public IActionResult Index()
 		{
-			_context = context;
-		}
-		public IActionResult Index()
-		{
-			var model = _context.Stores.ToList();
-			return View(model);
+            var model = _IStoreRepo.show();
+            return View(model);
 		}
 		[HttpGet]
 		public IActionResult Create()
@@ -25,47 +27,35 @@ namespace Demo.Controllers
 		[HttpPost]
 		public IActionResult Create(Store model)
 		{
-			if (model.Store_Name?.Length > 2)
-			{
-				_context.Stores.Add(model);
-				_context.SaveChanges();
-				return RedirectToAction("Index");
-			}
-			else
-			{
-				return View(model);
-			}
-		}
+            if (model.Store_Name?.Length > 2)
+            {
+                _IStoreRepo.Add(model);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(model);
+            }
+        }
 		[HttpGet]
 		public IActionResult Edit(int? id)
 		{
-			if (id == null)
-				return BadRequest();
-			var model = _context.Stores.FirstOrDefault(a => a.Id == id);
-			if (model == null)
-				return NotFound();
-			return View(model);
+            var model = _IStoreRepo.GetById(id.Value);
+            return View(model);
 
 		}
 		[HttpPost]
 		public IActionResult Edit(Store store)
 		{
-			var Old_Store = _context.Stores.FirstOrDefault(a => a.Id == store.Id);
-			Old_Store.Store_Name = store.Store_Name;
-			_context.SaveChanges();
-			return RedirectToAction("Index");
+            _IStoreRepo.Update(store);
+            return RedirectToAction("Index");
 		}
 		public IActionResult Delete(int? id)
 		{
-
-			if (id == null)
-				return BadRequest();
-			var model = _context.Stores.FirstOrDefault(a => a.Id == id);
-			if (model == null)
-				return NotFound();
-			_context.Remove(model);
-			_context.SaveChanges();
-			return RedirectToAction("Index");
+            if (!id.HasValue)
+                return BadRequest();
+            _IStoreRepo.Delete(id.Value);
+            return RedirectToAction("Index");
 		}
 	}
 }

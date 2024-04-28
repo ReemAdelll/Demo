@@ -1,4 +1,5 @@
 using Demo.Models;
+using Demo.Repos;
 using Microsoft.EntityFrameworkCore;
 
 namespace Demo
@@ -11,7 +12,9 @@ namespace Demo
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddTransient<IStoreRepo, StoreRepo>();
+            builder.Services.AddTransient<IItemRepo, ItemRepo>();
+            builder.Services.AddTransient<IStoreItemRepo, StoreItemRepo>();
 
             builder.Services.AddDbContext<Demo_dbcontext>(a =>
             {

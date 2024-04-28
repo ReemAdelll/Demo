@@ -1,19 +1,23 @@
 ﻿using Demo.Models;
+using Demo.Repos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.Controllers
 {
 	public class ItemController : Controller
 	{
-		private readonly Demo_dbcontext _context;
+		
+		private readonly IItemRepo _IItemRepo;
 
-		public ItemController(Demo_dbcontext context)
+		public ItemController(IItemRepo IRepo)
 		{
-			_context = context;
+			
+			_IItemRepo = IRepo;
 		}
+
 		public IActionResult Index()
 		{
-			var model = _context.Items.ToList();
+			var model = _IItemRepo.show();
 			return View(model);
 		}
 		public IActionResult Create()
@@ -25,8 +29,7 @@ namespace Demo.Controllers
 		{
 			if (model.Item_Name?.Length > 2)
 			{
-				_context.Items.Add(model);
-				_context.SaveChanges();
+				_IItemRepo.Add(model);
 				return RedirectToAction("Index");
 			}
 			else
@@ -38,32 +41,23 @@ namespace Demo.Controllers
 		[HttpGet]
 		public IActionResult Edit(int? id)
 		{
-			if (id == null)
-				return BadRequest();
-			var model = _context.Items.FirstOrDefault(a => a.Id == id);
-			if (model == null)
-				return NotFound();
+			
+			var model = _IItemRepo.GetById(id.Value);
 			return View(model);
 
 		}
 		[HttpPost]
 		public IActionResult Edit(Item item)
 		{
-			var Old_item = _context.Items.FirstOrDefault(a => a.Id == item.Id);
-			Old_item.Item_Name = item.Item_Name;
-			_context.SaveChanges();
+			_IItemRepo.Update(item);
 			return RedirectToAction("Index");
 		}
 		public IActionResult Delete(int? id)
 		{
-			if (id == null)
+			if (!id.HasValue)
 				return BadRequest();
-			var model = _context.Items.FirstOrDefault(a => a.Id == id);
-			if (model == null)
-				return NotFound();
-			_context.Remove(model);
-			_context.SaveChanges();
-			return RedirectToAction("Index");
+            _IItemRepo.Delete(id.Value);
+            return RedirectToAction("Index");
 		}
 	}
 }
