@@ -6,7 +6,8 @@ namespace Demo.Models
     {
         public DbSet<Item> Items { get; set; }
         public DbSet<Store> Stores { get; set; }
-        public Demo_dbcontext()
+		public DbSet<StoreAndItem> StoresAndItems { get; set; }
+		public Demo_dbcontext()
         {
             
         }

@@ -1,0 +1,49 @@
+﻿@model StoreItemViewModel
+@{
+	SelectList Store = new SelectList(Model.Stores, "Id", "Store_Name");
+	SelectList Item = new SelectList(Model.Items, "Id", "Item_Name");
+}
+
+
+
+
+ <form method="post">
+
+	<select asp-for="Store_Id" asp-items="Store" class="form-control">
+		<option></option>
+	</select>
+	<select asp-for="Item_Id" asp-items="Item" class="form-control">
+		<option></option>
+	</select>
+	<div id="Total_Quantity">
+	
+
+
+	</div>
+</form>
+@section Scripts{
+	<script>
+		$(document).ready(
+			function () {
+				$('#Store_Id, #Item_Id').on('change', function () {
+					var store_id = $('#Store_Id').val();
+					var item_id = $('#Item_Id').val();
+					
+					if(store_id != '' && item_id != '')
+					{
+						$.ajax({
+							url: '/StoreItemViewModel/GetTotalQuantity?StoreId=' + store_id + '&ItemId=' + item_id,
+							method:'GET',
+							success: function (result) {
+								$('#Total_Quantity').text('Total Quantity is :  ' + result);
+								console.log(result);
+							}
+						})
+					}
+				});
+			});
+	</script>
+}
+
+
+
